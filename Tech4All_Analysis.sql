@@ -17,14 +17,16 @@ SELECT * FROM `mypersonalportfolio-1.SaaS_Sales.orders` LIMIT 1000;
 SELECT * FROM `mypersonalportfolio-1.SaaS_Sales.customer_info` LIMIT 1000;
 
 -- It'll be good to join the customer_info table and the orders table as more information about the customers, such as the customer name 
-and industry they operate in, would be nice to see for each order that the customer purchased.
+-- and industry they operate in, would be nice to see for each order that the customer purchased.
 
 -- There's a couple of key questions here that I want to understand. I'd really like to understand what the top customers are by sales. 
 -- Understanding which products sell the most by sales is of interest here as well. 
 -- Finally, understanding any geographical, industry, or segment performance differences here would really be insightful.
 
 -- Let's join the customer_info and orders tables.
-SELECT o.*, c.Customer, c.Industry 
+SELECT  o.*, 
+        c.Customer,
+        c.Industry 
 FROM `mypersonalportfolio-1.SaaS_Sales.orders` o
 JOIN `mypersonalportfolio-1.SaaS_Sales.customer_info` c
 ON o.Customer_ID = c.ID;
@@ -143,9 +145,8 @@ WHERE o.Profit IS NULL;
 
 -- Okay, let's start looking at the data and analyzing it. First, I want to understand the yearly trends of the dataset. 
 --How has total sales grown over the years?
-SELECT
-  EXTRACT(year FROM o.Order_Date) AS Year,
-  ROUND(SUM(o.Sales), 2) AS total_sales,
+SELECT  EXTRACT(year FROM o.Order_Date) AS Year,
+        ROUND(SUM(o.Sales), 2) AS total_sales,
 FROM `mypersonalportfolio-1.SaaS_Sales.orders` o
 JOIN `mypersonalportfolio-1.SaaS_Sales.customer_info` c
 ON o.Customer_ID = c.ID
@@ -154,9 +155,8 @@ ORDER BY 1;
 
 -- Let's expand this a little bit and see what the percentage change was from the previous year.
 WITH yearly_sales AS (
-  SELECT
-    EXTRACT(year FROM o.Order_Date) AS Year,
-    ROUND(SUM(o.Sales), 2) AS total_sales,
+  SELECT    EXTRACT(year FROM o.Order_Date) AS Year,
+            ROUND(SUM(o.Sales), 2) AS total_sales,
   FROM `mypersonalportfolio-1.SaaS_Sales.orders` o
   JOIN `mypersonalportfolio-1.SaaS_Sales.customer_info` c
   ON o.Customer_ID = c.ID
@@ -176,13 +176,12 @@ ORDER BY 1;
 
 -- Let's drill down into the regional breakdown first, with the same percentage change analysis from the yearly view in the previous query.
 WITH regional_yearly_sales AS (
-  SELECT
-    EXTRACT(year FROM o.Order_Date) AS Year,
-    CASE 
-      WHEN o.Region = 'APJ' THEN 'APAC'
-      ELSE o.Region
-      END AS Region,
-    ROUND(SUM(o.Sales), 2) AS total_sales,
+  SELECT    EXTRACT(year FROM o.Order_Date) AS Year,
+            CASE 
+            WHEN o.Region = 'APJ' THEN 'APAC'
+            ELSE o.Region
+            END AS Region,
+            ROUND(SUM(o.Sales), 2) AS total_sales,
   FROM `mypersonalportfolio-1.SaaS_Sales.orders` o
   JOIN `mypersonalportfolio-1.SaaS_Sales.customer_info` c
   ON o.Customer_ID = c.ID
@@ -202,15 +201,14 @@ ORDER BY 1, 3 DESC;
 
 -- Let's now drill down into the market segment breakdown and see the percentage change from previous years.
 WITH segment_yearly_sales AS (
-  SELECT
-    EXTRACT(year FROM o.Order_Date) AS Year,
-    o.Segment,
-    ROUND(SUM(o.Sales), 2) AS total_sales,
-  FROM `mypersonalportfolio-1.SaaS_Sales.orders` o
-  JOIN `mypersonalportfolio-1.SaaS_Sales.customer_info` c
-  ON o.Customer_ID = c.ID
-  GROUP BY 1, 2
-  ORDER BY 1, 3 DESC)
+    SELECT  EXTRACT(year FROM o.Order_Date) AS Year,
+            o.Segment,
+            ROUND(SUM(o.Sales), 2) AS total_sales,
+    FROM `mypersonalportfolio-1.SaaS_Sales.orders` o
+    JOIN `mypersonalportfolio-1.SaaS_Sales.customer_info` c
+    ON o.Customer_ID = c.ID
+    GROUP BY 1, 2
+    ORDER BY 1, 3 DESC)
 SELECT  Year,
         Segment,
         total_sales,
@@ -225,17 +223,16 @@ ORDER BY 1, 3 DESC;
 
 -- Finally, let's look at the industry breakdown by total yearly sales.
 WITH industry_yearly_sales AS (
-  SELECT
-    EXTRACT(year FROM o.Order_Date) AS Year,
-    CASE
-      WHEN c.Industry = 'Misc' THEN 'Miscellaneous'
-      ELSE c.Industry END AS Industry,
-    ROUND(SUM(o.Sales), 2) AS total_sales,
-  FROM `mypersonalportfolio-1.SaaS_Sales.orders` o
-  JOIN `mypersonalportfolio-1.SaaS_Sales.customer_info` c
-  ON o.Customer_ID = c.ID
-  GROUP BY 1, 2
-  ORDER BY 1, 3 DESC)
+    SELECT  EXTRACT(year FROM o.Order_Date) AS Year,
+            CASE
+            WHEN c.Industry = 'Misc' THEN 'Miscellaneous'
+            ELSE c.Industry END AS Industry,
+            ROUND(SUM(o.Sales), 2) AS total_sales,
+    FROM `mypersonalportfolio-1.SaaS_Sales.orders` o
+    JOIN `mypersonalportfolio-1.SaaS_Sales.customer_info` c
+    ON o.Customer_ID = c.ID
+    GROUP BY 1, 2
+    ORDER BY 1, 3 DESC)
 SELECT  Year,
         Industry,
         total_sales,
@@ -250,8 +247,8 @@ ORDER BY 1, 3 DESC;
 
 -- Let's take a look at the lifetime total sales of our regions.
 SELECT  CASE
-          WHEN o.Region = 'APJ' THEN 'APAC'
-          ELSE o.Region END AS Region,
+        WHEN o.Region = 'APJ' THEN 'APAC'
+        ELSE o.Region END AS Region,
         ROUND(SUM(o.Sales), 2) AS total_sales
 FROM `mypersonalportfolio-1.SaaS_Sales.orders` o
 JOIN `mypersonalportfolio-1.SaaS_Sales.customer_info` c
@@ -301,17 +298,17 @@ LIMIT 25;
 -- Who are our top 5 customers in each industry by sales?
 WITH rank_table AS (
     SELECT  c.Industry,
-          c.Customer,
-          ROUND(SUM(o.Sales), 2) AS total_sales,
-          RANK() OVER (PARTITION BY c.Industry ORDER BY SUM(o.Sales) DESC) AS rank
-  FROM `mypersonalportfolio-1.SaaS_Sales.orders` o
-  JOIN `mypersonalportfolio-1.SaaS_Sales.customer_info` c
-  ON o.Customer_ID = c.ID
-  GROUP BY 1, 2
-  ORDER BY 1, 3 DESC)
+            c.Customer,
+            ROUND(SUM(o.Sales), 2) AS total_sales,
+            RANK() OVER (PARTITION BY c.Industry ORDER BY SUM(o.Sales) DESC) AS rank
+    FROM `mypersonalportfolio-1.SaaS_Sales.orders` o
+    JOIN `mypersonalportfolio-1.SaaS_Sales.customer_info` c
+    ON o.Customer_ID = c.ID
+    GROUP BY 1, 2
+    ORDER BY 1, 3 DESC)
 SELECT  CASE
-          WHEN Industry = 'Misc' THEN 'Miscellaneous'
-          ELSE Industry END AS Industry,
+        WHEN Industry = 'Misc' THEN 'Miscellaneous'
+        ELSE Industry END AS Industry,
         Customer,
         total_sales,
         rank
@@ -321,15 +318,15 @@ WHERE rank BETWEEN 1 AND 5;
 
 -- Finally, who are our top 5 customers in each segment?
 WITH seg_rank_table AS (
-  SELECT  o.Segment,
-          c.Customer,
-          ROUND(SUM(o.Sales), 2) AS total_sales,
-          RANK() OVER (PARTITION BY o.Segment ORDER BY SUM(o.Sales) DESC) AS rank
-  FROM `mypersonalportfolio-1.SaaS_Sales.orders` o
-  JOIN `mypersonalportfolio-1.SaaS_Sales.customer_info` c
-  ON o.Customer_ID = c.ID
-  GROUP BY 1, 2
-  ORDER BY 1, 3 DESC)
+    SELECT  o.Segment,
+            c.Customer,
+            ROUND(SUM(o.Sales), 2) AS total_sales,
+            RANK() OVER (PARTITION BY o.Segment ORDER BY SUM(o.Sales) DESC) AS rank
+    FROM `mypersonalportfolio-1.SaaS_Sales.orders` o
+    JOIN `mypersonalportfolio-1.SaaS_Sales.customer_info` c
+    ON o.Customer_ID = c.ID
+    GROUP BY 1, 2
+    ORDER BY 1, 3 DESC)
 SELECT  Segment,
         Customer,
         total_sales,
