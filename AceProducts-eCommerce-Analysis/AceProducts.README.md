@@ -14,9 +14,9 @@ AceProducts Sales **has been declining from previous years with 2022 sales and o
 The products that have **taken the longest to deliver** have been **Macbook Air Laptops, Apple iPhones and Samsung Charging Cable Packs**, averaging 8 days compared to 7 days for all other products. While we continue to see strong ROI from **marketing directly** to consumers, our **email marketing channel** has been increasingly contributing more towards total sales, growing by **nearly 50% in 2022 since 2019**. **Over 96% of total sales in 2022** were made on our website compared to our mobile app (4%).
 
 # Technical Analysis
-<kbd> ![image](https://github.com/Yunsang93/AceProducts-eCommerce-Analysis/assets/62224204/983a7908-0c22-4f09-ac25-80cf737a3d82) </kbd>
-<kbd> ![image](https://github.com/Yunsang93/AceProducts-eCommerce-Analysis/assets/62224204/22787f2d-7ca0-4f5e-8425-9a7158e4e854) </kbd>
-<kbd> ![image](https://github.com/Yunsang93/AceProducts-eCommerce-Analysis/assets/62224204/0a4bee77-6c6b-4fa8-b8e3-6ec451ae4222) </kbd>
+<kbd> ![image](https://github.com/aylee428/portfolio-projects/assets/62224204/6a6bbf4e-bd02-4e82-b3bc-0c5003480539) </kbd>
+<kbd> ![image](https://github.com/aylee428/portfolio-projects/assets/62224204/595d61a7-910d-427e-8676-e2744844fcb5) </kbd>
+<kbd> ![image](https://github.com/aylee428/portfolio-projects/assets/62224204/59efc28b-4d05-456e-9430-522f4d9854a7) </kbd>
 
 # Recommendations
 Based on these insights, the team would like to make several recommendations across several areas:
