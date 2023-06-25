@@ -245,6 +245,124 @@ ORDER BY 1, 3 DESC;
 -- many industries in 2022 with Manufacturing contributing the highest. In 2023, Tech is having the strongest year in sales followed by 
 -- Healthcare, with a 81.82% and 44.67% increase in sales from 2022 respectively.
 
+-- It would be good to also take a look at which quarters regions typically performed the strongest in terms of total sales. Let's take a look at how each region performed each quarter over the past 4 years.
+-- AMER
+WITH regional_quarterly_sales AS (
+    SELECT    DATE_TRUNC(o.Order_Date, Quarter) AS Quarter,
+              CASE
+              WHEN o.Region = 'APJ' THEN 'APAC'
+              ELSE o.Region END AS Region,
+              ROUND(SUM(o.Sales), 2) AS total_sales,
+    FROM `mypersonalportfolio-1.SaaS_Sales.orders` o
+    JOIN `mypersonalportfolio-1.SaaS_Sales.customer_info` c
+    ON o.Customer_ID = c.ID
+    GROUP BY 1, 2
+    ORDER BY 1, 3 DESC)
+SELECT  Quarter,
+        Region,
+        total_sales,
+        RANK() OVER (PARTITION BY EXTRACT(Year FROM Quarter) ORDER BY total_sales DESC) AS quarterly_rank
+FROM regional_quarterly_sales
+WHERE Region = 'AMER'
+ORDER BY 1, 3 DESC;
+-- Notably, Q4 was AMER's strongest quarter each year. 
+
+-- APAC
+WITH regional_quarterly_sales AS (
+    SELECT    DATE_TRUNC(o.Order_Date, Quarter) AS Quarter,
+              CASE 
+              WHEN o.Region = 'APJ' THEN 'APAC'
+              ELSE o.Region END AS Region,
+              ROUND(SUM(o.Sales), 2) AS total_sales,
+    FROM `mypersonalportfolio-1.SaaS_Sales.orders` o
+    JOIN `mypersonalportfolio-1.SaaS_Sales.customer_info` c
+    ON o.Customer_ID = c.ID
+    GROUP BY 1, 2
+    ORDER BY 1, 3 DESC)
+SELECT  Quarter,
+        Region,
+        total_sales,
+        RANK() OVER (PARTITION BY EXTRACT(Year FROM Quarter) ORDER BY total_sales DESC) AS quarterly_rank
+FROM regional_quarterly_sales
+WHERE Region = 'APAC'
+ORDER BY 1, 3 DESC;
+
+-- EMEA
+WITH regional_quarterly_sales AS (
+    SELECT    DATE_TRUNC(o.Order_Date, Quarter) AS Quarter,
+              CASE 
+              WHEN o.Region = 'APJ' THEN 'APAC'
+              ELSE o.Region END AS Region,
+              ROUND(SUM(o.Sales), 2) AS total_sales,
+    FROM `mypersonalportfolio-1.SaaS_Sales.orders` o
+    JOIN `mypersonalportfolio-1.SaaS_Sales.customer_info` c
+    ON o.Customer_ID = c.ID
+    GROUP BY 1, 2
+    ORDER BY 1, 3 DESC)
+SELECT  Quarter,
+        Region,
+        total_sales,
+        RANK() OVER (PARTITION BY EXTRACT(Year FROM Quarter) ORDER BY total_sales DESC) AS quarterly_rank
+FROM regional_quarterly_sales
+WHERE Region = 'EMEA'
+ORDER BY 1, 3 DESC;
+
+-- This trend was consistent for all regions. Q4 was the strongest performing quarter - this should be a quarter that we should continue to emphasize as this quarter generates the company the highest total sales. 
+--This is also consistent across all of our different market segments, with the exception of 2020 in the Enterprise Segment, where Q1 was actually the highest.
+-- SMB
+WITH segment_quarterly_sales AS (
+    SELECT    DATE_TRUNC(o.Order_Date, Quarter) AS Quarter,
+              o.Segment,
+              ROUND(SUM(o.Sales), 2) AS total_sales,
+    FROM `mypersonalportfolio-1.SaaS_Sales.orders` o
+    JOIN `mypersonalportfolio-1.SaaS_Sales.customer_info` c
+    ON o.Customer_ID = c.ID
+    GROUP BY 1, 2
+    ORDER BY 1, 3 DESC)
+SELECT  Quarter,
+        Segment,
+        total_sales,
+        RANK() OVER (PARTITION BY EXTRACT(Year FROM Quarter) ORDER BY total_sales DESC) AS quarterly_rank
+FROM segment_quarterly_sales
+WHERE Segment = 'SMB'
+ORDER BY 1, 3 DESC;
+
+-- Enterprise
+WITH segment_quarterly_sales AS (
+    SELECT    DATE_TRUNC(o.Order_Date, Quarter) AS Quarter,
+              o.Segment,
+              ROUND(SUM(o.Sales), 2) AS total_sales,
+    FROM `mypersonalportfolio-1.SaaS_Sales.orders` o
+    JOIN `mypersonalportfolio-1.SaaS_Sales.customer_info` c
+    ON o.Customer_ID = c.ID
+    GROUP BY 1, 2
+    ORDER BY 1, 3 DESC)
+SELECT  Quarter,
+        Segment,
+        total_sales,
+        RANK() OVER (PARTITION BY EXTRACT(Year FROM Quarter) ORDER BY total_sales DESC) AS quarterly_rank
+FROM segment_quarterly_sales
+WHERE Segment = 'Enterprise'
+ORDER BY 1, 3 DESC;
+
+-- Strategic
+WITH segment_quarterly_sales AS (
+    SELECT    DATE_TRUNC(o.Order_Date, Quarter) AS Quarter,
+              o.Segment,
+              ROUND(SUM(o.Sales), 2) AS total_sales,
+    FROM `mypersonalportfolio-1.SaaS_Sales.orders` o
+    JOIN `mypersonalportfolio-1.SaaS_Sales.customer_info` c
+    ON o.Customer_ID = c.ID
+    GROUP BY 1, 2
+    ORDER BY 1, 3 DESC)
+SELECT  Quarter,
+        Segment,
+        total_sales,
+        RANK() OVER (PARTITION BY EXTRACT(Year FROM Quarter) ORDER BY total_sales DESC) AS quarterly_rank
+FROM segment_quarterly_sales
+WHERE Segment = 'Strategic'
+ORDER BY 1, 3 DESC;
+
 -- Let's take a look at the lifetime total sales of our regions.
 SELECT  CASE
         WHEN o.Region = 'APJ' THEN 'APAC'
