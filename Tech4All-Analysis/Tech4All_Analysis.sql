@@ -433,6 +433,25 @@ SELECT  CASE
 FROM rank_table
 WHERE rank BETWEEN 1 AND 5;
 
+-- What about our top 5 customers in each region by sales?
+WITH region_rank_table AS (
+  SELECT  o.Region,
+          c.Customer,
+          ROUND(SUM(o.Sales), 2) AS total_sales,
+          RANK() OVER (PARTITION BY o.Region ORDER BY SUM(o.Sales) DESC) AS rank
+  FROM `mypersonalportfolio-1.SaaS_Sales.orders` o
+  JOIN `mypersonalportfolio-1.SaaS_Sales.customer_info` c
+  ON o.Customer_ID = c.ID
+  GROUP BY 1, 2
+  ORDER BY 1, 3 DESC)
+SELECT  CASE
+          WHEN Region = 'APJ' THEN 'APAC'
+          ELSE Region END AS Region,
+        Customer,
+        total_sales,
+        rank
+FROM region_rank_table
+WHERE rank BETWEEN 1 AND 5;
 
 -- Finally, who are our top 5 customers in each segment?
 WITH seg_rank_table AS (
