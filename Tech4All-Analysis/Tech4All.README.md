@@ -7,16 +7,18 @@ I use a combination of SQL queries to analyze the data and Tableau to visualize 
 # About the Data
 The dataset contains two tables: one containing information about Tech4All's sales and order across their global regions and the second table containing information about the customers that the orders have been sold to. 
 The dataset contains about 10,000 rows.
+* SQL queries used for the analysis can be found [here](https://github.com/aylee428/portfolio-projects/blob/main/Tech4All-Analysis/Tech4All_Analysis.sql).
+* Tableau workbook for analysis and more detailed insights can be found [here](https://github.com/aylee428/portfolio-projects/blob/main/Tech4All-Analysis/Tech4All.twb) or on my Tableau Public site [here](https://public.tableau.com/views/Tech4AllAnalysis/LifetimePerformance?:language=en-US&publish=yes&:display_count=n&:origin=viz_share_link).
 
 # Summary of Insights
-### Yearly:
+### Yearly
 * Tech4All's total sales declined in 2021 but **sharply increased in 2022 by 29%**. This increase may be due to companies loosening up their IT spend moving into the post-pandemic phase.
 * Total Sales increased by a smaller % in 2023 (**21%**) but reached the highest amount (**$733K**) in the past 4 years. 
-### Region:
+### Region
 * The EMEA region is our strongest performing region. When comparing the growth of each region over time, EMEA has shown the most volatility in total sales, with sales fluctuating by large percentages.
 * While all three regions have typically shown stronger growth towards the second half of each year (Q3 & Q4), EMEA in particular has shown higher spikes in Q4 compared to those of other regions (43% YoY Q4 Growth in 2023 vs. -2% for AMER & 15% for APAC).
 
-### Segment:
+### Segment
 * While the SMB segment continues to provide the lionshare of total sales, the Strategic market segment is our fastest growing market segment.
   * Notably, the Strategic segment surpassed the SMB segment in Total Sales **for the first time** in Q2 of 2023.
 * While underperforming relative to the SMB and Strategic segments, the Enterprise segment reached its **highest total sales ($66K)** in Q4 of 2023.
