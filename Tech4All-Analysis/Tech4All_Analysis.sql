@@ -59,89 +59,21 @@ JOIN `mypersonalportfolio-1.SaaS_Sales.customer_info` c
 ON o.Customer_ID = c.ID;
 
 -- Checking for null values
-SELECT o.Id
+SELECT  SUM(CASE WHEN o.Id IS NULL THEN 1 ELSE 0 END) AS count_null_id,
+        SUM(CASE WHEN o.Order_Date IS NULL THEN 1 ELSE 0 END) AS count_null_orderdate,
+        SUM(CASE WHEN o.Customer_id IS NULL THEN 1 ELSE 0 END) AS count_null_customerid,
+        SUM(CASE WHEN o.Contact_Name IS NULL THEN 1 ELSE 0 END) AS count_null_contactname,
+        SUM(CASE WHEN o.Country IS NULL THEN 1 ELSE 0 END) AS count_null_country,
+        SUM(CASE WHEN o.City IS NULL THEN 1 ELSE 0 END) AS count_null_city,
+        SUM(CASE WHEN o.Region IS NULL THEN 1 ELSE 0 END) AS count_null_region,
+        SUM(CASE WHEN o.Segment IS NULL THEN 1 ELSE 0 END) AS count_null_segment,
+        SUM(CASE WHEN o.Product IS NULL THEN 1 ELSE 0 END) AS count_null_product,
+        SUM(CASE WHEN o.License IS NULL THEN 1 ELSE 0 END) AS count_null_license,
+        SUM(CASE WHEN o.Sales IS NULL THEN 1 ELSE 0 END) AS count_null_sales,
+        SUM(CASE WHEN o.Quantity IS NULL THEN 1 ELSE 0 END) AS count_null_quantity
 FROM `mypersonalportfolio-1.SaaS_Sales.orders` o
 JOIN `mypersonalportfolio-1.SaaS_Sales.customer_info` c
 ON o.Customer_ID = c.ID
-WHERE o.ID IS NULL;
-
-SELECT o.Order_Date
-FROM `mypersonalportfolio-1.SaaS_Sales.orders` o
-JOIN `mypersonalportfolio-1.SaaS_Sales.customer_info` c
-ON o.Customer_ID = c.ID
-WHERE o.Order_Date IS NULL;
-
-SELECT o.Customer_ID
-FROM `mypersonalportfolio-1.SaaS_Sales.orders` o
-JOIN `mypersonalportfolio-1.SaaS_Sales.customer_info` c
-ON o.Customer_ID = c.ID
-WHERE o.Customer_ID IS NULL;
-
-SELECT o.Contact_Name
-FROM `mypersonalportfolio-1.SaaS_Sales.orders` o
-JOIN `mypersonalportfolio-1.SaaS_Sales.customer_info` c
-ON o.Customer_ID = c.ID
-WHERE o.Contact_Name IS NULL;
-
-SELECT o.Country
-FROM `mypersonalportfolio-1.SaaS_Sales.orders` o
-JOIN `mypersonalportfolio-1.SaaS_Sales.customer_info` c
-ON o.Customer_ID = c.ID
-WHERE o.Country IS NULL;
-
-SELECT o.City
-FROM `mypersonalportfolio-1.SaaS_Sales.orders` o
-JOIN `mypersonalportfolio-1.SaaS_Sales.customer_info` c
-ON o.Customer_ID = c.ID
-WHERE o.City IS NULL;
-
-SELECT o.Region
-FROM `mypersonalportfolio-1.SaaS_Sales.orders` o
-JOIN `mypersonalportfolio-1.SaaS_Sales.customer_info` c
-ON o.Customer_ID = c.ID
-WHERE o.Region IS NULL;
-
-SELECT o.Segment
-FROM `mypersonalportfolio-1.SaaS_Sales.orders` o
-JOIN `mypersonalportfolio-1.SaaS_Sales.customer_info` c
-ON o.Customer_ID = c.ID
-WHERE o.Segment IS NULL;
-
-SELECT o.Product
-FROM `mypersonalportfolio-1.SaaS_Sales.orders` o
-JOIN `mypersonalportfolio-1.SaaS_Sales.customer_info` c
-ON o.Customer_ID = c.ID
-WHERE o.Product IS NULL;
-
-SELECT o.License
-FROM `mypersonalportfolio-1.SaaS_Sales.orders` o
-JOIN `mypersonalportfolio-1.SaaS_Sales.customer_info` c
-ON o.Customer_ID = c.ID
-WHERE o.License IS NULL;
-
-SELECT o.Sales
-FROM `mypersonalportfolio-1.SaaS_Sales.orders` o
-JOIN `mypersonalportfolio-1.SaaS_Sales.customer_info` c
-ON o.Customer_ID = c.ID
-WHERE o.Sales IS NULL;
-
-SELECT o.Quantity
-FROM `mypersonalportfolio-1.SaaS_Sales.orders` o
-JOIN `mypersonalportfolio-1.SaaS_Sales.customer_info` c
-ON o.Customer_ID = c.ID
-WHERE o.Quantity IS NULL;
-
-SELECT o.Discount
-FROM `mypersonalportfolio-1.SaaS_Sales.orders` o
-JOIN `mypersonalportfolio-1.SaaS_Sales.customer_info` c
-ON o.Customer_ID = c.ID
-WHERE o.Discount IS NULL;
-
-SELECT o.Profit
-FROM `mypersonalportfolio-1.SaaS_Sales.orders` o
-JOIN `mypersonalportfolio-1.SaaS_Sales.customer_info` c
-ON o.Customer_ID = c.ID
-WHERE o.Profit IS NULL;
 
 -- Okay, let's start looking at the data and analyzing it. First, I want to understand the yearly trends of the dataset. 
 --How has total sales grown over the years?
