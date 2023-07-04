@@ -31,7 +31,8 @@ Based on these insights, the team would like to make several recommendations acr
 * **Platform Improvements:**
     * Our website continues to see strong demand for new accounts. We recommend **enhancements to continue to be made to our website and mobile apps** as both platforms continue to see strong growth.
 
-
+# Considerations for Future Analysis
+Further analysis could look into geographic trends and how regional performance differs across the dimensions analyzed in this project.  
 
 
 
